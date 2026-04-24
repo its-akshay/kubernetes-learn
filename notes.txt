@@ -140,3 +140,13 @@ minikube addons enable ingress
 
 =============9=================
 configmaps
+
+
+=============10================
+livenessProbe Container restarts Detect deadlock / hung process
+readinessProbe Pod removed from Service App still warming up / loading
+startupProbe Container restarts Slow-starting apps (Java, etc.)
+
+livenessProbe → “Is app alive?”
+readinessProbe → “Is app ready to serve traffic?”
+startupProbe → “Has app finished starting?”

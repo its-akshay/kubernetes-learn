@@ -18,12 +18,39 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
+
           env:
             - name: PORT
               value: "8080"
-          envFrom: #here it is injected
+
+          envFrom:
             - configMapRef:
                 name: app-config
+
+          # 🔴 Liveness Probe (restart if dead)
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          # 🟡 Readiness Probe (control traffic)
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 2
+            periodSeconds: 5
+
+          # 🟢 Startup Probe (for slow start safety)
+          startupProbe:
+            httpGet:
+              path: /
+              port: 8080
+            failureThreshold: 10
+            periodSeconds: 5
+
           resources:
             requests:
               cpu: "100m"
@@ -31,7 +58,6 @@ spec:
             limits:
               cpu: "500m"
               memory: "128Mi"
-
 ---
 apiVersion: v1
 kind: Service
