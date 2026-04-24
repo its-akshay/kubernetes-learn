@@ -1,0 +1,8 @@
+Cluster       A group of machines managed as one unit
+Node          A single machine (VM/physical) in the cluster
+Pod           Smallest deployable unit — wraps 1+ containers
+Deployment    Declares desired state: '3 replicas of my Go server'
+Service       Stable network endpoint in front of a set of Pods
+Namespace     Virtual cluster for isolating teams or environments
+kubectl       CLI tool to interact with the Kubernetes API
+YAML          manifest File that describes what you want K8s to create/maintain
