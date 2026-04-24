@@ -92,3 +92,51 @@ NOT strict round-robin
 Can hit same pod multiple times
 
 Client → Service → kube-proxy → Pods
+
+
+===========================chapter 8=============
+4 service type exists:
+
+ClusterIP 
+Inside cluster only — default type for internal microservices
+NodePort 
+Node IP + port 30000-32767 — good for dev/minikube testing
+LoadBalancer 
+Cloud LB external IP — production on GKE / EKS / AKS
+ExternalName 
+DNS CNAME alias — map to an external hostname
+
+🔹 What is Ingress?
+Ingress = HTTP/HTTPS router (Layer 7)
+Exposes services using domain names instead of IP:Port
+Works like a reverse proxy
+🔹 Why use Ingress?
+Avoid using NodePort / LoadBalancer directly
+
+Use clean URLs like:
+
+http://go-app.local
+Supports:
+Host-based routing
+Path-based routing
+SSL (HTTPS)
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: go-app-ingress
+spec:
+  rules:
+
+
+Browser → Ingress → Service → Pod
+
+it doesnt work by default we have to enable it:
+minikube addons enable ingress
+
+
+
+
+
+=============9=================
+configmaps
