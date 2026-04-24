@@ -59,3 +59,36 @@ Pod IPs change on restart. A Service gives a stable DNS name + IP that load-bala
 
 configmap.yaml (it externalise configuration)
 In Kubernetes, a ConfigMap stores non-sensitive configuration data (like environment variables or config files) separately from container images.
+
+
+Minikube = Local Kubernetes environment for learning, testing, and development
+
+kube-apiserver → entry point (all commands go here)
+etcd → database storing cluster state
+kube-scheduler → decides which node runs your pod
+kube-controller-manager → keeps system in desired state
+kube-proxy → networking (service routing)
+coredns → DNS inside cluster
+storage-provisioner → handles volumes
+
+
+deleting pods will try to create replica again with new deployment yaml file
+
+“NodePort isn’t directly accessible, so Minikube creates a tunnel to map service to localhost.”
+
+if we curl we can see that hostname is changing each time:
+1..5 | ForEach-Object { curl.exe http://127.0.0.1:54640; echo "`n" }
+
+
+kubectl = CLI client
+minikube = local Kubernetes cluster
+
+service exposes 2 urls using minikube 
+1 NodePort
+2 TunnelUrl
+
+Load balancing behavior
+NOT strict round-robin
+Can hit same pod multiple times
+
+Client → Service → kube-proxy → Pods
