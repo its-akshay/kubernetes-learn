@@ -6,3 +6,56 @@ Service       Stable network endpoint in front of a set of Pods
 Namespace     Virtual cluster for isolating teams or environments
 kubectl       CLI tool to interact with the Kubernetes API
 YAML          manifest File that describes what you want K8s to create/maintain
+
+
+===========2=========
+Control Plane (Master)
+• kube-apiserver — REST API front door; every kubectl command hits this.
+• etcd — distributed key-value store, single source of truth for cluster state.
+• kube-scheduler — picks which node a new Pod should run on.
+• kube-controller-manager — runs controllers (ReplicaSet, Node, Endpoint...).
+Worker Nodes
+• kubelet — agent on every node; starts/stops containers as instructed.
+• kube-proxy — maintains iptables rules for Service routing.
+• Container Runtime — actually runs containers (containerd, CRI-O).
+
+==========3===========
+an installation setup is done 
+we need docker kubectl and minikube(local cluster)
+
+
+=======4===========
+A Pod is one or more containers sharing a network namespace and storage volumes. In practice we never create
+bare Pods; a Deployment manages them for us.
+we create a pod.yaml
+
+
+few commands
+kubectl apply -f pod.yaml
+kubectl get pods
+kubectl describe pod demo-pod
+kubectl logs demo-pod
+kubectl exec -it demo-pod -- bash
+kubectl delete pod demo-po
+
+A Deployment ensures N copies of your Pod always run. It handles rollouts, rollbacks, and self-healing automatically.
+
+we create a deployment.yaml
+Deployment → ReplicaSet → Pods → Containers
+Deployment
+ ├── metadata (name)
+ └── spec
+      ├── replicas
+      ├── selector
+      └── template (Pod blueprint)
+            ├── metadata (labels)
+            └── spec (containers)
+
+
+
+
+service.yaml
+Pod IPs change on restart. A Service gives a stable DNS name + IP that load-balances across all matching Pods
+
+configmap.yaml (it externalise configuration)
+In Kubernetes, a ConfigMap stores non-sensitive configuration data (like environment variables or config files) separately from container images.
